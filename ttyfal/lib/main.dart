@@ -18,25 +18,41 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       home: new Scaffold(
-        body: new Center(
-          child: new ListView(
-            children: <Widget>[
-              _getCardContainer(itemTitle, Icons.account_box)
-            ],
-          ),
-        ),
+        body: _buildListView(context),
       ),
     );
   }
+
+  ListView _buildListView(context) {
+    return ListView.builder(
+        itemCount: 2,
+        itemBuilder: (context, int) {
+          return _getCardContainer(context, itemTitle, Icons.account_box);
+        });
+  }
 }
 
-Widget _getCardContainer(String itemTitle, IconData iconData) {
-  return new Container(
-    child: new ListTile(
-      leading: new Icon(iconData),
-      title: new Text(itemTitle),
-      subtitle: new Text(itemTitle),
-      trailing: new Icon(iconData),
-    )
+Widget _getCardContainer(BuildContext context, String itemTitle, IconData iconData) {
+  return new ListTile(
+    leading: new Icon(iconData),
+    title: new Text(itemTitle),
+    subtitle: new Text(itemTitle),
+    trailing: new Icon(iconData),
+    onTap: () {
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (BuildContext context) => CardDetailView()));
+    },
   );
+}
+
+// Detail View
+class CardDetailView extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return new Scaffold(
+      backgroundColor: Colors.grey,
+    );
+  }
 }

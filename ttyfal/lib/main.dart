@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'dart:async';
 
 void main() {
-  debugPaintSizeEnabled=true;
+//  debugPaintSizeEnabled = true;
   runApp(MyApp());
 }
 
@@ -25,19 +26,22 @@ class MyApp extends StatelessWidget {
 
   ListView _buildListView(context) {
     return ListView.builder(
-        itemCount: 2,
+        itemCount: 1,
         itemBuilder: (context, int) {
-          return _getCardContainer(context, itemTitle, Icons.account_box);
+          var assetsImage = new AssetImage('assets/graphics/cover_1.jpg');
+          var image = new Image(image: assetsImage, width: 48.0, height: 48.0);
+          return _getCardContainer(context, itemTitle, image);
         });
   }
 }
 
-Widget _getCardContainer(BuildContext context, String itemTitle, IconData iconData) {
+Widget _getCardContainer(
+    BuildContext context, String itemTitle, Image iconData) {
   return new ListTile(
-    leading: new Icon(iconData),
+    leading: iconData,
     title: new Text(itemTitle),
     subtitle: new Text(itemTitle),
-    trailing: new Icon(iconData),
+    trailing: Hero(tag: "Hero Widget", child: iconData),
     onTap: () {
       Navigator.push(
           context,
@@ -51,8 +55,17 @@ Widget _getCardContainer(BuildContext context, String itemTitle, IconData iconDa
 class CardDetailView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    var assetsImage = new AssetImage('assets/graphics/cover_1.jpg');
+    var image = new Image(image: assetsImage, width: 150.0, height: 150.0);
+
     return new Scaffold(
-      backgroundColor: Colors.grey,
-    );
+        body: Align(
+      alignment: Alignment.center,
+      child: Hero(
+        tag: "Hero Widget",
+        child: image,
+
+      ),
+    ));
   }
 }
